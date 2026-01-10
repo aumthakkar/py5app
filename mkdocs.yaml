@@ -1,0 +1,11 @@
+site_name: 'Python app'
+site_description: 'Main documentation for Python app'
+repo_url: https://github.com/aumthakkar/py5app
+edit_uri: edit/main/docs
+
+plugins:
+  - techdocs-core
+
+nav:
+  - Overview:
+      - Getting Started: 'docs/index.md'
