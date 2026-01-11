@@ -16,7 +16,8 @@ def info():
     return jsonify({
         "time" : time.ctime(),
         "hostname" : socket.gethostname(),
-        "message" : "You are doing great, Pranav!"
+        "message" : "You are doing great, Pranav!",
+        "env" : "dev"
     })
 
 if __name__ == '__main__':
