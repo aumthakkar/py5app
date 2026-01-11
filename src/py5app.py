@@ -17,7 +17,6 @@ def info():
         "time" : time.ctime(),
         "hostname" : socket.gethostname(),
         "message" : "You are doing great, man!",
-        "env" : "dev"
     })
 
 if __name__ == '__main__':
