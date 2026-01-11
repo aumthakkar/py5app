@@ -32,6 +32,7 @@ jobs:
 
     cd:
         runs-on: self-hosted
+        needs: ci
         steps:
             -   name: Checkout Github Repo
                 uses: actions/checkout@v6
