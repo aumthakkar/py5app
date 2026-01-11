@@ -19,7 +19,7 @@ jobs:
             -   name: Shorten commit_id
                 shell: bash
                 run: |
-                    echo "COMMIT_ID=${GITHUB_SHA ::6}" >> ${GITHUB_ENV}
+                    echo "COMMIT_ID=${GITHUB_SHA::6}" >> ${GITHUB_ENV}
             
             -   name: Docker Build and Push
                 uses: docker/build-push-action@v6
