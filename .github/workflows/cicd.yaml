@@ -29,3 +29,46 @@ jobs:
 
         outputs:
             commit_id: ${{ env.COMMIT_ID }}
+
+    cd:
+        runs-on: self-hosted
+        steps:
+            -   name: Checkout Github Repo
+                uses: actions/checkout@v6
+
+            -   name: Update tag in values.yaml file
+                run: |
+                    sudo apt update && sudo apt install python3-pip -y
+                    pip install yq --break-system-packages
+                    echo "${{ needs.ci.outputs.commit_id }}"
+                    yq -Yi '.image.tag = "${{ needs.ci.outputs.commit_id }}"' charts/py5app/values.yaml
+
+            -   name: Commit Change
+                uses: EndBug/add-and-commit@v9
+                with:
+                    message: "pushed the image with tag: ${{ needs.ci.outputs.commit_id }}"
+
+            -   name: Install ArgoCD CLI
+                run: |
+                    curl -ksSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/v3.2.2/download/argocd-linux-amd64
+                    sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+                    rm argocd-linux-amd64
+
+            -   name: ArgoCD login and Sync app with ArgoCD
+                run: |
+                    argocd login argocd-server.argocd \
+                    --grpc-web \
+                    --insecure \
+                    --username ${{ secrets.ARGOCD_USERNAME }}
+                    --password ${{ secrets.ARGOCD_PASSWORD }}
+
+                    argocd app sync py5app
+
+
+
+
+
+
+
+                
+
